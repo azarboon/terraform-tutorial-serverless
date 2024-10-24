@@ -6,6 +6,7 @@
 !providers.tf
 !outputs.tf
 !variables.tf
+!README.md
 !.gitignore
 
 # Allow function directories
