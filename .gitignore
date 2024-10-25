@@ -7,6 +7,7 @@
 !outputs.tf
 !variables.tf
 !README.md
+!.terraform.lock.hcl
 !.gitignore
 
 # Allow function directories
