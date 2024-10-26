@@ -3,10 +3,16 @@
 
 # Allow terraform_configs directory
 !/terraform_configs/
+!/function_code/
 
 # Ignore everything in terraform_configs
 terraform_configs/*
 
+
 # Allow main.tf in terraform_configs
 !terraform_configs/main.tf
+!terraform_configs/.terraform.lock.hcl
+!terraform_configs/outputs.tf
+!terraform_configs/providers.tf
+!terraform_configs/variables.tf
 
