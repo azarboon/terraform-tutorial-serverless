@@ -2,16 +2,15 @@
 *
 
 # Allow only necessary files
-!main.tf
-!providers.tf
-!outputs.tf
-!variables.tf
+!terraform_configs\main.tf
+!terraform_configs\providers.tf
+!terraform_configs\outputs.tf
+!terraform_configs\variables.tf
 !README.md
-!.terraform.lock.hcl
+!terraform_configs\.terraform.lock.hcl
 !.gitignore
 
 # Allow function directories
-!*/__init__.py
-!*/function.json
+!function_code
 
 
