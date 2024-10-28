@@ -50,7 +50,17 @@ resource "azurerm_storage_account" "example" {
 
 }
 
+resource "azurerm_storage_container" "example" {
+  name                 = "example"
+  storage_account_name = azurerm_storage_account.example.name
+}
 
+resource "azurerm_storage_blob" "example" {
+  name                   = "example"
+  storage_account_name   = azurerm_storage_account.example.name
+  storage_container_name = azurerm_storage_container.example.name
+  type                   = "Block"
+}
 
 resource "azurerm_service_plan" "example" {
   name                = "example-app-service-plan"
@@ -67,9 +77,15 @@ resource "azurerm_linux_function_app" "example" {
   location             = data.azurerm_resource_group.rg.location
   service_plan_id      = azurerm_service_plan.example.id
   storage_account_name = azurerm_storage_account.example.name
+
+app_settings = {
+  WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.example.name}.blob.core.windows.net/${azurerm_storage_container.example.name}/${azurerm_storage_blob.example.name}"
+}
   site_config {
+
     application_stack {
       node_version = "14"
+
     }
   }
 }
