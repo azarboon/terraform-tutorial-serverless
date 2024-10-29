@@ -31,6 +31,6 @@ output "storage_blob_name" {
 }
 
 output "path_for_packaged_file" {
-  value = "https://${azurerm_storage_account.example.name}.blob.core.windows.net/${azurerm_storage_container.example.name}/${azurerm_storage_blob.example.name}"
+  value = "https://${azurerm_storage_account.example.name}.blob.core.windows.net/${azurerm_storage_container.example.name}/${azurerm_storage_blob.example.name}.zip"
 
 }

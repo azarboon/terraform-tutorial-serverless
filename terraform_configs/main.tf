@@ -55,12 +55,15 @@ resource "azurerm_storage_container" "example" {
   storage_account_name = azurerm_storage_account.example.name
 }
 
+
 resource "azurerm_storage_blob" "example" {
   name                   = "example"
   storage_account_name   = azurerm_storage_account.example.name
   storage_container_name = azurerm_storage_container.example.name
   type                   = "Block"
+  content_type           = "application/x-zip-compressed"
 }
+
 
 resource "azurerm_service_plan" "example" {
   name                = "example-app-service-plan"
@@ -72,19 +75,22 @@ resource "azurerm_service_plan" "example" {
 }
 
 resource "azurerm_linux_function_app" "example" {
-  name                 = random_string.random_name.result
-  resource_group_name  = data.azurerm_resource_group.rg.name
-  location             = data.azurerm_resource_group.rg.location
-  service_plan_id      = azurerm_service_plan.example.id
-  storage_account_name = azurerm_storage_account.example.name
+  name                       = random_string.random_name.result
+  resource_group_name        = data.azurerm_resource_group.rg.name
+  location                   = data.azurerm_resource_group.rg.location
+  service_plan_id            = azurerm_service_plan.example.id
 
-app_settings = {
-  WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.example.name}.blob.core.windows.net/${azurerm_storage_container.example.name}/${azurerm_storage_blob.example.name}"
-}
+  storage_account_name       = azurerm_storage_account.example.name
+  storage_account_access_key = azurerm_storage_account.example.primary_access_key
+  /*
+  app_settings = {
+    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.example.name}.blob.core.windows.net/${azurerm_storage_container.example.name}/${azurerm_storage_blob.example.name}.zip"
+  }
+  */
   site_config {
 
     application_stack {
-      node_version = "14"
+      node_version = "20"
 
     }
   }
