@@ -7,7 +7,7 @@ variable "subscription_id" {
 }
 
 variable "resource_group_name" {
-  default = "1-d4b1fcf6-playground-sandbox"
+  default = "1-8eb38932-playground-sandbox"
   type    = string
 }
 

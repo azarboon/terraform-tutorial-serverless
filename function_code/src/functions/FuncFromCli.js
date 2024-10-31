@@ -1,6 +1,6 @@
 const { app } = require('@azure/functions');
 
-app.http('example', {
+app.http('FuncFromCli', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
@@ -8,6 +8,6 @@ app.http('example', {
 
         const name = request.query.get('name') || await request.text() || 'world';
 
-        return { body: `Hello, ${name}! from Mahdi` };
+        return { body: `Updated Hello, ${name}!` };
     }
 });

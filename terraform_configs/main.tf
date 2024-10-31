@@ -55,7 +55,7 @@ resource "azurerm_storage_container" "example" {
   storage_account_name = azurerm_storage_account.example.name
 }
 
-
+/*
 resource "azurerm_storage_blob" "example" {
   name                   = "example"
   storage_account_name   = azurerm_storage_account.example.name
@@ -64,6 +64,7 @@ resource "azurerm_storage_blob" "example" {
   content_type           = "application/x-zip-compressed"
 }
 
+*/
 
 resource "azurerm_service_plan" "example" {
   name                = "example-app-service-plan"
