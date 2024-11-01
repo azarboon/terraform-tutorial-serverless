@@ -2,12 +2,12 @@
 
 # these are sandbox credentials so don't bother ;)
 variable "subscription_id" {
-  default = "80ea84e8-afce-4851-928a-9e2219724c69"
+  default = "9734ed68-621d-47ed-babd-269110dbacb1"
   type    = string
 }
 
 variable "resource_group_name" {
-  default = "1-8eb38932-playground-sandbox"
+  default = "1-7f4395a9-playground-sandbox"
   type    = string
 }
 

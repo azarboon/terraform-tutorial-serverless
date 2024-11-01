@@ -29,7 +29,7 @@ resource "azurerm_api_management_api" "example" {
   api_management_name = azurerm_api_management.example.name
   revision            = "1"
   display_name        = "Example API"
-  api_type            = "graphql"
+  api_type            = "http"
   protocols           = ["https"]
 }
 
@@ -50,12 +50,14 @@ resource "azurerm_storage_account" "example" {
 
 }
 
+/*
+
 resource "azurerm_storage_container" "example" {
   name                 = "example"
   storage_account_name = azurerm_storage_account.example.name
 }
 
-/*
+
 resource "azurerm_storage_blob" "example" {
   name                   = "example"
   storage_account_name   = azurerm_storage_account.example.name
