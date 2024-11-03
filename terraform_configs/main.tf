@@ -14,7 +14,7 @@ resource "random_string" "random_name" {
 }
 
 resource "azurerm_api_management" "example" {
-  name                = random_string.random_name.result
+  name                = "myapi${random_string.random_name.result}"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
   publisher_email     = "test@contoso.com"
@@ -38,7 +38,7 @@ resource "azurerm_api_management_backend" "example" {
   resource_group_name = data.azurerm_resource_group.rg.name
   api_management_name = azurerm_api_management.example.name
   protocol            = "http"
-  url                 = "https://${azurerm_linux_function_app.example.default_hostname}"
+  url                 = "https://${azurerm_linux_function_app.example.default_hostname}/api/funcfromcli"
 }
 
 resource "azurerm_storage_account" "example" {
@@ -78,7 +78,7 @@ resource "azurerm_service_plan" "example" {
 }
 
 resource "azurerm_linux_function_app" "example" {
-  name                       = random_string.random_name.result
+  name                       = "myfuncapp${random_string.random_name.result}"
   resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = data.azurerm_resource_group.rg.location
   service_plan_id            = azurerm_service_plan.example.id
