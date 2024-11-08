@@ -31,7 +31,23 @@ resource "azurerm_api_management_api" "example" {
   display_name        = "Example API"
   api_type            = "http"
   protocols           = ["https"]
+  subscription_required = false
 }
+
+resource "azurerm_api_management_api_operation" "example" {
+  operation_id        = "op1"
+  api_name            = azurerm_api_management_api.example.name
+  api_management_name = azurerm_api_management.example.name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  display_name        = "GET Resource"
+  method              = "GET"
+  url_template        = "op1"
+    response {
+    status_code = 200
+    description = "Successful GET request"
+  }
+}
+
 
 resource "azurerm_api_management_backend" "example" {
   name                = "example-backend"
@@ -40,6 +56,8 @@ resource "azurerm_api_management_backend" "example" {
   protocol            = "http"
   url                 = "https://${azurerm_linux_function_app.example.default_hostname}/api/funcfromcli"
 }
+
+
 
 resource "azurerm_storage_account" "example" {
   name                     = random_string.random_name.result
