@@ -6,22 +6,9 @@ output "resource_group_location" {
   value = data.azurerm_resource_group.rg.location
 }
 
-output "api_management_service_name" {
-  value = azurerm_api_management.example.name
-}
-
-output "azurerm_linux_function_app_url" {
-  value = azurerm_linux_function_app.example.default_hostname
-}
-
-
-
-output "function_app_name" {
-  value = azurerm_linux_function_app.example.name
-}
-
-output "backend_url" {
-  value = azurerm_api_management_backend.example.url
+output "frontend_url" {
+  value = "${azurerm_api_management.example.gateway_url}/${azurerm_api_management_api.example.path}${azurerm_api_management_api_operation.example.url_template}"
+  // value = azurerm_api_management.example.gateway_url
 }
 
 /*

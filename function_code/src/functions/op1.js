@@ -10,14 +10,13 @@ app.http('FuncFromCli', {
 
         // return { body: `Updated Hello, ${name}!` };
         return {
-        body: `4th updated Hello, ${name}!`,
+        body: `Hello ${name}, this is coming from Function App!`,
         headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type",
-            "custom-header": "bbb"
-        }
+          }
     }
     }
 });

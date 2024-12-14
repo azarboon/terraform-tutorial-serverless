@@ -1,7 +1,7 @@
 <policies>
 	<inbound>
 		<base />
-		<set-backend-service base-url="https://myfuncappsbigwbgyzdync.azurewebsites.net/api" />
+		<set-backend-service base-url="${base-url}" />
 	</inbound>
 	<backend>
 		<base />

@@ -41,7 +41,7 @@ resource "azurerm_api_management_api_operation" "example" {
   resource_group_name = data.azurerm_resource_group.rg.name
   display_name        = "GET Resource"
   method              = "GET"
-  url_template        = "funcfromcli" #make sure this is exactly same as the function name in invoke url
+  url_template        = "funcfromcli" # make sure this is exactly same as the function name in invoke url
   response {
     status_code = 200
     description = "Successful GET request"
@@ -52,8 +52,13 @@ resource "azurerm_api_management_api_policy" "example" {
   api_name            = azurerm_api_management_api.example.name
   resource_group_name = data.azurerm_resource_group.rg.name
   api_management_name = azurerm_api_management.example.name
+    xml_content = templatefile("policy.xml", {
+    base-url        = "https://${azurerm_linux_function_app.example.default_hostname}/api"
+  })
   // xml_content         = file("policy.xml")
-// try this format 
+
+
+/* try this format 
     xml_content = <<XML
     <policies>
       <inbound />
@@ -62,6 +67,8 @@ resource "azurerm_api_management_api_policy" "example" {
       <on-error />
     </policies>
 XML
+
+*/
 
 }
 
