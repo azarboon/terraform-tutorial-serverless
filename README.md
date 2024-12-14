@@ -35,8 +35,7 @@ Get function app name, go to your function folder and do this to publish. upon s
 
 After each TF deployment, you need to redeploy function code.
 
-> [!NOTE]  
-> Ensure that the `url_template` property in the `azurerm_api_management_api_operation` resource aligns with the function name specified in the `invoke_url`. Avoid appending any slashes to the `url_template` value.
 
-> [!NOTE]  
-> EEnsure that `https://your-function-app-name.azurewebsites.net/api` is consistently used in both the policy and the `Service URL` in the backend configuration, and ensure it overrides any existing value in the backend.
+Note that integration between Azure Function App and Azure API Management can be challenging and prone to various issues. Unfortunately, the documentation on this integration is limited (I have submitted some pull requests to improve it and am hopeful they will be accepted). To reduce the likelihood of errors, I have automated the variables as much as possible. However, if you plan to modify the code, please keep the following considerations in mind:
+- Ensure that the `url_template` property in the `azurerm_api_management_api_operation` resource aligns with the function name specified in the `invoke_url`. Avoid appending any slashes to the `url_template` value.
+- Ensure that `https://your-function-app-name.azurewebsites.net/api` is consistently used in both the policy and the `Service URL` in the backend configuration, and ensure it overrides any existing value in the backend.
