@@ -71,9 +71,7 @@ Azure Functions Core Tools has been used to package and deploy the Function App 
 4. Verify the deployment:
    - **Backend URL (`Invoke URL`)**: Send a GET request to this URL. The response should return a 200 status code with the following message:
      ```
-     {
-       "message": "Hello world, this is coming from Function App!"
-     }
+     "Hello world, this is coming from Function App!"
      ```
 
    - **Frontend URL (`frontend_url`)**: Send a GET request to this URL. If everything is correctly configured, the frontend should return the same 200 status code and message.
