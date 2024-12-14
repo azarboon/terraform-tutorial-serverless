@@ -1,61 +1,42 @@
-# Serverless app on Azure with Terraform
+# Sample Serverless Application on Azure: Function App and API Management with Terraform
 
-//This project is in progress
+//This is in progress
 
-Before creating an API instance, go and create an app service then create api from portal and app service's page. check settings.
+TODO:
 
-This the latest policy I've got. Check why it forwards the request to a wrong url. Enable tracing in api management, put it in capilot. Make sure your Postman requests have "origin" header. Don't enable CORS at function app level because it overrides your code level headers. 
-
-<policies>
-    <inbound>
-        <base />
-        <cors>
-            <allowed-origins>
-                <origin>*</origin>
-            </allowed-origins>
-            <allowed-methods>
-                <method>GET</method>
-                <method>POST</method>
-                <method>OPTIONS</method>
-            </allowed-methods>
-            <allowed-headers>
-                <header>Content-Type</header>
-            </allowed-headers>
-        </cors>
-        <set-header name="Origin" exists-action="override">
-            <value>*</value>
-        </set-header>
-        <!-- Set the backend service URL -->
-        <set-backend-service base-url="https://myfuncappwbpdmbsmzfqyx.azurewebsites.net/api/funcfromcli" />
-    </inbound>
-    <backend>
-        <forward-request />
-    </backend>
-    <outbound>
-        <base />
-    </outbound>
-    <on-error>
-        <base />
-    </on-error>
-</policies>
+Make sure required parameter is passed into policy file
+Check how the name of function in "invoke url" is determined and make sure `url_template` automatically refer to it.
 
 
+## How to run
 
+- `az login`
+- in terraform_configs/variables.tf update `subscription_id` and `resource_group_name` (you can run `az group list` to get rg name)
+- `cd terraform_configs` then:
+- remove terraform state file
+- `terraform init`
+- `terraform plan -out main.tfplan`
+- `terraform apply main.tfplan`
 
+Note that deploying Azure API Management instance can take up to 90 minutes. So, be patient.
 
-Add a PR to azure http triggered function that ensures content-type http/json, and CORS headers exist. Also make PR for followings: Make sure your Postman requests have "origin" header. Don't enable CORS at function app level because it overrides your code level headers. 
+Note the function app name from the outputted results, which will be something like `myfuncappsbigwbgyzdync`. You will need it to deploy your function code.
 
-// TODO: make the api url path to return content from backend function. Currently, to get 200, you need to delete backend policy from portal.follow from there
+> [!NOTE]  
+> I have utilized [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local) to package and deploy Azure Functions, though other tools can also be used. Currently, Terraform does not offer full integration with such deployment tools, requiring Azure Functions to be deployed separately after each Terraform deployment. This process can be automated through the use of custom scripts.
 
+Go to `function_code` folder and package and deploy your functions:
 
-After each TF deployment, you need to redeploy function code.
-
-Do these to package and deploy your func:
+- `cd ../function_code`
 
 Get function app name, go to your function folder and do this to publish. upon successful publish, you get invocation link which can be different from default link. In case you didnt get invoke url, run the command again.
 
-func azure functionapp publish myfuncappwbpdmbsmzfqyx
+`func azure functionapp publish myfuncappsbigwbgyzdync`
 
+After each TF deployment, you need to redeploy function code.
 
-You can develop and change functions using func cli. Go to "function_code" folder and run "func start"
+> [!NOTE]  
+> Ensure that the `url_template` property in the `azurerm_api_management_api_operation` resource aligns with the function name specified in the `invoke_url`. Avoid appending any slashes to the `url_template` value.
 
+> [!NOTE]  
+> EEnsure that `https://your-function-app-name.azurewebsites.net/api` is consistently used in both the policy and the `Service URL` in the backend configuration, and ensure it overrides any existing value in the backend.

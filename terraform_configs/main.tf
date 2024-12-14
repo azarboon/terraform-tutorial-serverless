@@ -24,13 +24,13 @@ resource "azurerm_api_management" "example" {
 }
 
 resource "azurerm_api_management_api" "example" {
-  name                = "example-api"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  api_management_name = azurerm_api_management.example.name
-  revision            = "1"
-  display_name        = "Example API"
-  api_type            = "http"
-  protocols           = ["https"]
+  name                  = "example-api"
+  resource_group_name   = data.azurerm_resource_group.rg.name
+  api_management_name   = azurerm_api_management.example.name
+  revision              = "1"
+  display_name          = "Example API"
+  api_type              = "http"
+  protocols             = ["https"]
   subscription_required = false
 }
 
@@ -41,11 +41,28 @@ resource "azurerm_api_management_api_operation" "example" {
   resource_group_name = data.azurerm_resource_group.rg.name
   display_name        = "GET Resource"
   method              = "GET"
-  url_template        = "op1"
-    response {
+  url_template        = "funcfromcli" #make sure this is exactly same as the function name in invoke url
+  response {
     status_code = 200
     description = "Successful GET request"
   }
+}
+
+resource "azurerm_api_management_api_policy" "example" {
+  api_name            = azurerm_api_management_api.example.name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  api_management_name = azurerm_api_management.example.name
+  // xml_content         = file("policy.xml")
+// try this format 
+    xml_content = <<XML
+    <policies>
+      <inbound />
+      <backend />
+      <outbound />
+      <on-error />
+    </policies>
+XML
+
 }
 
 
@@ -54,7 +71,7 @@ resource "azurerm_api_management_backend" "example" {
   resource_group_name = data.azurerm_resource_group.rg.name
   api_management_name = azurerm_api_management.example.name
   protocol            = "http"
-  url                 = "https://${azurerm_linux_function_app.example.default_hostname}/api/funcfromcli"
+  url                 = "https://${azurerm_linux_function_app.example.default_hostname}/api" #make sure this ends exactly like this. just "api" without slash
 }
 
 
@@ -96,10 +113,10 @@ resource "azurerm_service_plan" "example" {
 }
 
 resource "azurerm_linux_function_app" "example" {
-  name                       = "myfuncapp${random_string.random_name.result}"
-  resource_group_name        = data.azurerm_resource_group.rg.name
-  location                   = data.azurerm_resource_group.rg.location
-  service_plan_id            = azurerm_service_plan.example.id
+  name                = "myfuncapp${random_string.random_name.result}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  service_plan_id     = azurerm_service_plan.example.id
 
   storage_account_name       = azurerm_storage_account.example.name
   storage_account_access_key = azurerm_storage_account.example.primary_access_key

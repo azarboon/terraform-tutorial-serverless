@@ -1,13 +1,13 @@
 
 
-# these are sandbox credentials so don't bother ;)
+# these are sandbox credentials so dear hackers, don't bother ;)
 variable "subscription_id" {
-  default = "28e1e42a-4438-4c30-9a5f-7d7b488fd883"
+  default = "0cfe2870-d256-4119-b0a3-16293ac11bdc"
   type    = string
 }
 
 variable "resource_group_name" {
-  default = "1-82bf2281-playground-sandbox"
+  default = "1-fc2e0ee7-playground-sandbox"
   type    = string
 }
 
