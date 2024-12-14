@@ -8,7 +8,6 @@ app.http('FuncFromCli', {
 
         const name = request.query.get('name') || await request.text() || 'world';
 
-        // return { body: `Updated Hello, ${name}!` };
         return {
         body: `Hello ${name}, this is coming from Function App!`,
         headers: {

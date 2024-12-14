@@ -1,6 +1,3 @@
-
-
-//remove the below and replace it with above. make sure to replace "data.azurerm_resource_group" with "azurerm_resource_group"
 data "azurerm_resource_group" "rg" {
   name = var.resource_group_name
 }
@@ -55,21 +52,6 @@ resource "azurerm_api_management_api_policy" "example" {
     xml_content = templatefile("policy.xml", {
     base-url        = "https://${azurerm_linux_function_app.example.default_hostname}/api"
   })
-  // xml_content         = file("policy.xml")
-
-
-/* try this format 
-    xml_content = <<XML
-    <policies>
-      <inbound />
-      <backend />
-      <outbound />
-      <on-error />
-    </policies>
-XML
-
-*/
-
 }
 
 
@@ -81,8 +63,6 @@ resource "azurerm_api_management_backend" "example" {
   url                 = "https://${azurerm_linux_function_app.example.default_hostname}/api" #make sure this ends exactly like this. just "api" without slash
 }
 
-
-
 resource "azurerm_storage_account" "example" {
   name                     = random_string.random_name.result
   resource_group_name      = data.azurerm_resource_group.rg.name
@@ -91,24 +71,6 @@ resource "azurerm_storage_account" "example" {
   account_replication_type = "LRS"
 
 }
-
-/*
-
-resource "azurerm_storage_container" "example" {
-  name                 = "example"
-  storage_account_name = azurerm_storage_account.example.name
-}
-
-
-resource "azurerm_storage_blob" "example" {
-  name                   = "example"
-  storage_account_name   = azurerm_storage_account.example.name
-  storage_container_name = azurerm_storage_container.example.name
-  type                   = "Block"
-  content_type           = "application/x-zip-compressed"
-}
-
-*/
 
 resource "azurerm_service_plan" "example" {
   name                = "example-app-service-plan"
@@ -127,11 +89,6 @@ resource "azurerm_linux_function_app" "example" {
 
   storage_account_name       = azurerm_storage_account.example.name
   storage_account_access_key = azurerm_storage_account.example.primary_access_key
-  /*
-  app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.example.name}.blob.core.windows.net/${azurerm_storage_container.example.name}/${azurerm_storage_blob.example.name}.zip"
-  }
-  */
   site_config {
 
     application_stack {

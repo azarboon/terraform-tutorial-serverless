@@ -17,7 +17,7 @@ The following versions were used and confirmed to work. While other versions may
 ## Deploy infrastructure
 
 - `az login`
-- in terraform_configs/variables.tf update `subscription_id` and `resource_group_name` (you can run `az group list` to get rg name)
+- in `terraform_configs/variables.tf` update `subscription_id` and `resource_group_name` (you can run `az group list` to get rg name)
 - `cd terraform_configs` then:
 - remove terraform state file
 - `terraform init`
@@ -36,10 +36,8 @@ I have utilized [Azure Functions Core Tools](https://learn.microsoft.com/azure/a
 Go to `function_code` folder and package and deploy your functions:
 
 - `cd ../function_code`
-
-Replace `your_function_app_name` with the name obtained earlier from the outputs. Run the following command to package and upload the code. Upon successful publishing, you will receive the invocation link. However, note that the `func` CLI can occasionally exhibit errors, even if it displays the message `Deployment completed successfully`. To ensure the process completes correctly, if the `func azure functionapp publish` command does not return the invocation URL, rerun the command.
-
-`func azure functionapp publish your_function_app_name`
+- Install code dependencies by `npm install`
+- Replace `your_function_app_name` with the name obtained earlier from the outputs and run the following command to package and upload the code: `func azure functionapp publish your_function_app_name`. Upon successful publishing, you will receive the `invoke url`. However, note that the `func` CLI can occasionally exhibit errors, even if it displays the message `Deployment completed successfully`. To ensure the process completes correctly, if the `func azure functionapp publish` command does not return the `invoke url`, rerun the command. 
 
 The `Invoke URL` represents the URL of your Function App, which serves as the backend in the Azure API Management instance. To verify its functionality, make a `GET` request to this URL. No authorization headers are required, and the response should return a 200 status code with the following message `Hello world, this is coming from Function App!`. After confirming that the backend URL of the Azure API Management instance is functioning correctly, send a `GET` request to the API's frontend URL (`frontend_url` provided in the Terraform output). If everything is configured properly, the frontend should return the same 200 status code and message.
 
