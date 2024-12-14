@@ -1,5 +1,7 @@
 # Sample Serverless Application on Azure: Integration Between Function App and API Management with Terraform
 
+ADD NODE AND NPM VERSION
+
 Currently, there does not appear to be a functioning example showcasing the integration between Azure Function App and Azure API Management Instance. Existing samples are outdated, and there are significant gaps and errors in the documentation for both the Terraform AzureRM provider and Azure API Management. I have submitted several pull requests to improve these documentations and am publishing this sample code to assist others in navigating this integration.
 
 # Requirements
@@ -10,7 +12,8 @@ The following versions were used and confirmed to work. While other versions may
 - **Terraform CLI**: Version 1.9.7  
 - **Terraform AzureRM Provider**: Version 4.0 or later  
 - **Azure Functions Core Tools**: Version 4.0.6543  
-
+- **Node.js**: Version 22.9.0  
+- **Node Package Manager (NPM)**: Version 10.8.3 
 
 # How to run
 
