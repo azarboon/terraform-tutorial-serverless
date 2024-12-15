@@ -38,7 +38,7 @@ resource "azurerm_api_management_api_operation" "example" {
   resource_group_name = data.azurerm_resource_group.rg.name
   display_name        = "GET Resource"
   method              = "GET"
-  url_template        = "funcfromcli" # make sure this is exactly same as the function name in invoke url
+  url_template        = "funcfromcli" # Ensure this value matches the Azure Function's name exactly as it appears in the invoke URL.
   response {
     status_code = 200
     description = "Successful GET request"

@@ -1,4 +1,3 @@
-
 # Sample Serverless Application on Azure: Integration Between Function App and API Management with Terraform
 
 This repository provides a working example of the integration between Azure Function App and Azure API Management Instance. Currently, there is no fully functioning example available, as existing samples are outdated and the documentation for both the Terraform AzureRM provider and Azure API Management contains significant gaps and errors. To address these challenges, I have submitted several pull requests to improve the documentation and am publishing this sample code to assist others in navigating this integration.
@@ -23,7 +22,7 @@ The following versions were used and confirmed to work. While other versions may
    az login
    ```
 
-2. Retrieve the subscription ID and resource group name from your Azure environment. Update the `subscription_id` and `resource_group_name` values in the `terraform_configs/variables.tf` file accordingly. To obtain the resource group name, you can use:
+2. Retrieve the subscription ID and resource group name from your Azure environment. Update the `subscription_id` and `resource_group_name` values in the `terraform_configs/variables.tf` file accordingly. To obtain the subscription ID and resource group name, you can use:
    ```
    az group list
    ```

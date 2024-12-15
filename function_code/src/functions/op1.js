@@ -8,6 +8,8 @@ app.http('FuncFromCli', {
 
         const name = request.query.get('name') || await request.text() || 'world';
 
+/* For easier development and debugging, CORS restrictions have been disabled by setting Access-Control-Allow-Origin: *. 
+Once the application is running successfully, ensure CORS is re-enabled and properly configured to secure the application. */
         return {
         body: `Hello ${name}, this is coming from Function App!`,
         headers: {
